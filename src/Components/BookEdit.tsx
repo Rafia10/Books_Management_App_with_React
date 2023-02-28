@@ -5,6 +5,7 @@ export const BookEdit = ({ book, onSaveEdit }) => {
   function handleSubmit(e: any) {
     e.preventDefault();
     onSaveEdit(book.id, title);
+    window.location.reload();
   }
   return (
     <div>

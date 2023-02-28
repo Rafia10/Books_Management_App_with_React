@@ -1,24 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BookCreate } from "./Components/BookCreate";
 import { BookList } from "./Components/BookList";
+import { createBook, deleteBook, editBook, listBooks } from "./api";
 
 function App() {
   const [books, setBooks] = useState([]);
-  function handleSubmit(title: string) {
-    //@ts-ignore
-    setBooks([...books, { title, id: Math.round(Math.random() * 9999) }]);
+
+  async function fetchBooks() {
+    let allBooks = await listBooks();
+    setBooks(allBooks);
   }
-  function deleteBookById(id: number) {
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  async function handleSubmit(title: string) {
+    let updateBook = await createBook(title);
+    //@ts-ignore
+
+    setBooks([...books, updateBook]);
+  }
+  async function deleteBookById(id: number) {
+    await deleteBook(id);
     let updatedBooks = books.filter((book: any) => {
       return book.id !== id;
     });
+
     setBooks(updatedBooks);
   }
 
-  function updateBookById(id: number, newTitle: string) {
-    let updateBook = books.map((book: any) => {
+  async function updateBookById(id: number, newTitle: string) {
+    let update = await editBook(id, newTitle);
+
+    let updateBook = books.map(async (book: any) => {
       if (book.id === id) {
-        return { ...books, title: newTitle };
+        return { ...books, ...update };
       }
       return book;
     });
