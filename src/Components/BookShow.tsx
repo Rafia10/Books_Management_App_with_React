@@ -1,34 +1,26 @@
-import { useContext, useState } from "react";
-import { getBookByID } from "../api";
-import BooksContext from "../Context/books";
+import { useState } from "react";
 import { BookEdit } from "./BookEdit";
 import { ShowSingleBook } from "./ShowSingleBook";
 
 //@ts-ignore
-export const BookShow = ({ book }) => {
+export const BookShow = ({ book, onBookRemove, onEdit, onFetch }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [showSingleBook, setShowSingleBook] = useState(false);
-  const { deleteBookById } = useContext(BooksContext);
-  const { updateBookById } = useContext(BooksContext);
-  const { getBookById } = useContext(BooksContext);
 
   function handleDelete() {
-    deleteBookById(book.id);
+    onBookRemove(book.id);
   }
-
   function handleEdit() {
     setShowEdit(!showEdit);
   }
-
   function handleSubmit(id: number, newTitle: string) {
     setShowEdit(false);
-    updateBookById(id, newTitle);
+    onEdit(id, newTitle);
   }
-
   function handleImage(e: any) {
     e.preventDefault();
     setShowSingleBook(true);
-    getBookById(book.id);
+    onFetch(book.id);
   }
 
   let content = <h3>{book.title}</h3>;

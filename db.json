@@ -1,7 +1,7 @@
 {
   "books": [
     {
-      "title": "Harry the Jokery",
+      "title": "Harry the Joker",
       "id": 2
     },
     {
@@ -43,10 +43,6 @@
     {
       "title": "",
       "id": 12
-    },
-    {
-      "title": "",
-      "id": 13
     }
   ]
 }
