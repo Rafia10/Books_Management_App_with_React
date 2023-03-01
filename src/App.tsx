@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { BookCreate } from "./Components/BookCreate";
 import { BookList } from "./Components/BookList";
-import { createBook, deleteBook, editBook, listBooks } from "./api";
+import {
+  createBook,
+  deleteBook,
+  editBook,
+  getBookByID,
+  listBooks,
+} from "./api";
+import { ShowSingleBook } from "./Components/ShowSingleBook";
 
 function App() {
   const [books, setBooks] = useState([]);
-
   async function fetchBooks() {
     let allBooks = await listBooks();
     setBooks(allBooks);
@@ -28,7 +34,19 @@ function App() {
 
     setBooks(updatedBooks);
   }
+  async function getBookById(id: number) {
+    let bookId = await getBookByID(id);
 
+    let getBook = books.filter(async (book: any) => {
+      if (book.id === id) {
+        return bookId;
+      }
+      return book;
+    });
+
+    //@ts-ignore
+    setBooks(getBook);
+  }
   async function updateBookById(id: number, newTitle: string) {
     let update = await editBook(id, newTitle);
 
@@ -49,6 +67,7 @@ function App() {
         bookList={books}
         onBookDelete={deleteBookById}
         onBookEdit={updateBookById}
+        onBookGet={getBookById}
       />
     </div>
   );

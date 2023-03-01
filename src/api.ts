@@ -28,3 +28,10 @@ export const deleteBook = async (id: number) => {
   const response = await axios.delete(`http://localhost:3001/books/${id}`, {});
   return response.data;
 };
+
+//GetSingleBook
+
+export const getBookByID = async (id: number) => {
+  const response = await axios.get(`http://localhost:3001/books/${id}`, {});
+  return response.data;
+};
