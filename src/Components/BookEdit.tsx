@@ -1,13 +1,10 @@
-import { useContext, useState } from "react";
-import BooksContext from "../Context/books";
+import { useState } from "react";
 //@ts-ignore
 export const BookEdit = ({ book, onSaveEdit }) => {
-  const { updateBookById } = useContext(BooksContext);
   const [title, setUpdateTitle] = useState(book.title);
   function handleSubmit(e: any) {
     e.preventDefault();
-    updateBookById(book.id, title);
-    onSaveEdit();
+    onSaveEdit(book.id, title);
     window.location.reload();
   }
   return (
